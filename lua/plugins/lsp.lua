@@ -1,17 +1,17 @@
-return{
-   'neovim/nvim-lspconfig',
+return {
+  'neovim/nvim-lspconfig',
   dependencies = {
-   'williamboman/mason.nvim',
-   'williamboman/mason-lspconfig.nvim',
-   'mfussenegger/nvim-dap',
-   'jose-elias-alvarez/null-ls.nvim',
-   'jayp0521/mason-null-ls.nvim',
-   'WhoIsSethDaniel/mason-tool-installer.nvim',
-   'jayp0521/mason-nvim-dap.nvim',
-   'folke/neodev.nvim',
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'mfussenegger/nvim-dap',
+    'jose-elias-alvarez/null-ls.nvim',
+    'jayp0521/mason-null-ls.nvim',
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    'jayp0521/mason-nvim-dap.nvim',
+    'folke/neodev.nvim',
     "hrsh7th/cmp-nvim-lsp",
   },
-  config = function ()
+  config = function()
     local mason_status, mason = pcall(require, "mason")
     if not mason_status then
       return
@@ -47,9 +47,9 @@ return{
       vim.keymap.set('n', '<space>wl', function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
       end, bufopts)
-      vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-      vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-      vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+      vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
       vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
       -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
     end
@@ -61,6 +61,7 @@ return{
       function(server_name) -- default handler (optional)
         lspconfig[server_name].setup {
           on_attach = on_attach;
+          capabilities = require('cmp_nvim_lsp').default_capabilities();
         }
       end,
       -- Next, you can provide a dedicated handler for specific servers.
@@ -75,6 +76,20 @@ return{
             Lua = {
               diagnostics = {
                 globals = { 'vim' }
+              }
+            }
+          }
+        }
+      end,
+
+      ["cssls"] = function()
+        lspconfig.cssls.setup {
+          on_attach = on_attach;
+          capabilities = require('cmp_nvim_lsp').default_capabilities();
+          settings = {
+            css = {
+              lint = {
+                unknownAtRules = "ignore"
               }
             }
           }
