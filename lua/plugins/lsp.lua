@@ -17,6 +17,11 @@ return {
       return
     end
 
+    local mason_NullLs_status, mason_nullLs = pcall(require, "mason-null-ls")
+    if not mason_NullLs_status then
+      return
+    end
+
     local mason_lspconfig_status, mason_lspconfig = pcall(require, "mason-lspconfig")
     if not mason_lspconfig_status then
       return
@@ -29,6 +34,11 @@ return {
 
     mason.setup()
     mason_lspconfig.setup()
+    mason_nullLs.setup({
+      automatic_setup = true,
+    })
+
+    require('mason-null-ls').setup_handlers()
 
     local on_attach = function(client, bufnr)
       -- Enable completion triggered by <c-x><c-o>
