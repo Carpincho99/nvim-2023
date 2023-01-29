@@ -82,6 +82,7 @@ return {
       ["sumneko_lua"] = function()
         lspconfig.sumneko_lua.setup {
           on_attach = on_attach;
+          capabilities = require('cmp_nvim_lsp').default_capabilities();
           settings = {
             Lua = {
               diagnostics = {

@@ -3,6 +3,11 @@ return{
    'lukas-reineke/indent-blankline.nvim', -- indentation
    'numToStr/Comment.nvim', -- comments
 
+--Svelte highlight
+   'othree/html5.vim',
+   'pangloss/vim-javascript',
+   'evanleck/vim-svelte',
+
   -- snippets
    'L3MON4D3/LuaSnip', --snippet engine
    'rafamadriz/friendly-snippets', -- a bunch of snippets to 
