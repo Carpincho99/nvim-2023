@@ -38,7 +38,7 @@ return {
       automatic_setup = true,
     })
 
-    require('mason-null-ls').setup_handlers()
+    -- require('mason-null-ls').setup_handlers()
 
     local on_attach = function(client, bufnr)
       -- Enable completion triggered by <c-x><c-o>
@@ -70,8 +70,8 @@ return {
       -- a dedicated handler.
       function(server_name) -- default handler (optional)
         lspconfig[server_name].setup {
-          on_attach = on_attach;
-          capabilities = require('cmp_nvim_lsp').default_capabilities();
+          on_attach = on_attach,
+          capabilities = require('cmp_nvim_lsp').default_capabilities(),
         }
       end,
       -- Next, you can provide a dedicated handler for specific servers.
@@ -79,10 +79,10 @@ return {
       -- ["rust_analyzer"] = function ()
       --  require("rust-tools").setup {}
       -- end
-      ["sumneko_lua"] = function()
-        lspconfig.sumneko_lua.setup {
-          on_attach = on_attach;
-          capabilities = require('cmp_nvim_lsp').default_capabilities();
+      ["lua_ls"] = function()
+        lspconfig.lua_ls.setup {
+          on_attach = on_attach,
+          capabilities = require('cmp_nvim_lsp').default_capabilities(),
           settings = {
             Lua = {
               diagnostics = {
@@ -93,10 +93,23 @@ return {
         }
       end,
 
+      ["ltex"] = function()
+        lspconfig.ltex.setup {
+          on_attach = on_attach,
+          capabilities = require('cmp_nvim_lsp').default_capabilities(),
+          settings = {
+            ltex = {
+              -- language = "en"
+              language = "es"
+            }
+          }
+        }
+      end,
+
       ["cssls"] = function()
         lspconfig.cssls.setup {
-          on_attach = on_attach;
-          capabilities = require('cmp_nvim_lsp').default_capabilities();
+          on_attach = on_attach,
+          capabilities = require('cmp_nvim_lsp').default_capabilities(),
           settings = {
             css = {
               lint = {
@@ -110,9 +123,9 @@ return {
 
     local signs = {
       { name = "DiagnosticSignError", text = "" },
-      { name = "DiagnosticSignWarn", text = "" },
-      { name = "DiagnosticSignHint", text = "" },
-      { name = "DiagnosticSignInfo", text = "" },
+      { name = "DiagnosticSignWarn",  text = "" },
+      { name = "DiagnosticSignHint",  text = "" },
+      { name = "DiagnosticSignInfo",  text = "" },
     }
 
     for _, sign in ipairs(signs) do
